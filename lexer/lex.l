@@ -15,8 +15,6 @@ enum Token {
 };
 
 int line = 1;
-int lc_cnt = 0, rc_cnt = 0;
-int new_scope = 1;
 %}
 DIGIT [0-9]
 LETTER [a-zA-Z]
@@ -28,7 +26,7 @@ INT_LIT [-+]?{DEC_LIT}|{OCT_LIT}|{HEX_LIT}
 FLOAT_LIT [-+]?(({DIGIT}*(\.{DIGIT}+)?([eE]-?{DIGIT}+)?)|(({DIGIT}*\.{DIGIT}+)|({DIGIT}+(\.{DIGIT}+)?)))[fF]?
 SGPS \/\/.*
 DBPS \/\*(.|\n)*\*\/
-ERR_DEC {DIGIT}*{LETTER}+{DIGIT}*
+ERR_DEC {DIGIT}+{LETTER}+{DIGIT}*
 ERR_OCT 0{DIGIT}*[89]{DIGIT}*
 ERR_NUM {ERR_DEC}|{ERR_OCT}
 
@@ -74,15 +72,10 @@ ERR_NUM {ERR_DEC}|{ERR_OCT}
 ">=" {printf("%s : GE\n", yytext); }
 {ID} {printf("%s : ID\n", yytext); }
 {INT_LIT} {printf("%s : INT_LIT\n", yytext); }
-{ERR_NUM} {printf("Lexical error - line %d : %s\n", line, yytext); }
+{ERR_NUM} {printf("Lexical error - line %d : %s\n", yylineno, yytext); }
 {FLOAT_LIT} {printf("%s : FLOAT_LIT\n", yytext); }
 [ \t]+ {}
-{SGPS} {}
-{DBPS} {
-    for (int i = 0; i < strlen(yytext); ++i) {
-        if (yytext[i] == '\n') line++;
-    }      
-}
+{SGPS}|{DBPS} {}
 %%
 
 
@@ -90,9 +83,10 @@ int main(int argc, char** argv) {
     if(argc > 1) {
         if(!(yyin = fopen(argv[1], "r"))) {
            perror(argv[1]); 
-           return  1; 
+           return 1; 
         }       
-        yylex();
+		yylineno=1;
+        yylex(); // 或前面都加上return，这里用while(yylex());
         fclose(yyin);
     } else printf("No source file given!\n"); 
 

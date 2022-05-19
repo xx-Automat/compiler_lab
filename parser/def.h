@@ -5,10 +5,11 @@
 #include "sysy.tab.h"
 
 enum node_kind  { EXT_DEF_LIST,EXT_VAR_DEF,FUNC_DEF,FUNC_DEC,EXT_DEC_LIST,PARAM_LIST,PARAM_DEC,
-VAR_DEF,DEC_LIST,DEF_LIST,COMP_STM,STM_LIST,EXP_STMT,IF_THEN,IF_THEN_ELSE, FUNC_CALL,ARGS,
+VAR_DEF,ARR,DIM,DEC_LIST,DEF_LIST,COMP_STM,STM_LIST,EXP_STMT,IF_THEN,IF_THEN_ELSE, FUNC_CALL,ARGS,
 FUNCTION,PARAM,ARG,CALL,LABEL,GOTO,JLT,JLE,JGT,JGE,EQ,NEQ};
 #define MAXLENGTH   1000    //定义符号表的大小
 #define DX 3*sizeof(int)          //活动记录控制信息需要的单元数
+char filename[50];
 //以下语法树结点类型、三地址结点类型等定义仅供参考，实验时一定要根据自己的理解来定义
 struct opn{
     int kind;                  //标识操作的类型
@@ -36,7 +37,7 @@ struct node {    //以下对结点属性定义没有考虑存储效率，只是�
 		  int type_int;                 //由整常数生成的叶结点
 		  float type_float;              //由浮点常数生成的叶结点
 	      };
-    struct node *ptr[3];                   //子树指针，由kind确定有多少棵子树
+    struct node *ptr[4];                   //子树指针，由kind确定有多少棵子树
     int level;                    //层号
     int place;                    //表示结点对应的变量或运算结果临时变量在符号表的位置序号
     char Etrue[15],Efalse[15];      //对布尔表达式的翻译时，真假转移目标的标号
@@ -73,7 +74,7 @@ struct symbol_scope_begin {  /*当前作用域的符号在符号表的起始位�
 
 
 struct node *mknode(int kind,struct node *first,struct node *second, struct node *third,int pos );
-
+struct node *mknode4(int kind,struct node *first,struct node *second, struct node *third,struct node *fourth,int pos );
 // 为语义分析和代码生成预留 
 void semantic_Analysis0(struct node *T);
 void semantic_Analysis(struct node *T);

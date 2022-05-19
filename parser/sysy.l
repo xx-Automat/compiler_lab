@@ -16,8 +16,9 @@ typedef union {
 
 %}
 %option yylineno
-
-id   [A-Za-z][A-Za-z0-9]*  
+DIGIT [0-9]
+LETTER [a-zA-Z]
+id   ({LETTER}|_)({LETTER}|_|{DIGIT})*
 int    [0-9]+
 float  ([0-9]*\.[0-9]+)|([0-9]+\.)
 SGPS \/\/.*
@@ -41,6 +42,8 @@ DBPS \/\*(.|\n)*\*\/
 ","			{return COMMA;}
 ">"|"<"|">="|"<="|"=="|"!=" {strcpy(yylval.type_id, yytext);;return RELOP;}
 "="			{return ASSIGNOP;}
+"++"		{return AUTOPLUS;}
+"--"		{return AUTOMINUS;}
 "+"			{return PLUS;}
 "-"			{return MINUS;}
 "*"			{return STAR;}
@@ -53,6 +56,8 @@ DBPS \/\*(.|\n)*\*\/
 ")"			{return RP;}
 "{"			{return LC;}
 "}"			{return RC;}
+"["			{return LB;}
+"]" 		{return RB;}
 [\n]           {yycolumn=1;}   
 [ \r\t]          {}   
 {SGPS}|{DBPS}	{}

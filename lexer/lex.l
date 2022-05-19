@@ -14,7 +14,6 @@ enum Token {
     LEX_ERR
 };
 
-int line = 1;
 %}
 DIGIT [0-9]
 LETTER [a-zA-Z]
@@ -31,7 +30,6 @@ ERR_OCT 0{DIGIT}*[89]{DIGIT}*
 ERR_NUM {ERR_DEC}|{ERR_OCT}
 
 %%
-\n {++line;}
 "int" {printf("%s : INT\n", yytext); }
 "float" {printf("%s : FLOAT\n", yytext); }
 "void" {printf("%s : VOID\n", yytext); }

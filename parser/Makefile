@@ -1,4 +1,6 @@
-result:sysy.y sysy.l def.h ast.c
-	flex sysy.l
+parser: sysy.tab.c ast.c lex.yy.c
+	gcc sysy.tab.c ast.c lex.yy.c -o parser
+sysy.tab.c: sysy.y
 	bison -d sysy.y
-	gcc -o parser lex.yy.c sysy.tab.c ast.c
+lex.yy.c: sysy.l
+	flex sysy.l

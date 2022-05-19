@@ -43,35 +43,40 @@
      ID = 259,
      RELOP = 260,
      TYPE = 261,
-     FLOAT = 262,
-     LP = 263,
-     RP = 264,
-     LC = 265,
-     RC = 266,
-     LB = 267,
-     RB = 268,
-     SEMI = 269,
-     COMMA = 270,
-     AUTOPLUS = 271,
-     AUTOMINUS = 272,
-     PLUS = 273,
-     MINUS = 274,
-     STAR = 275,
-     DIV = 276,
-     MOD = 277,
-     ASSIGNOP = 278,
-     AND = 279,
-     OR = 280,
-     NOT = 281,
-     IF = 282,
-     ELSE = 283,
-     FOR = 284,
-     WHILE = 285,
-     CONTINUE = 286,
-     BREAK = 287,
-     RETURN = 288,
-     UMINUS = 289,
-     LOWER_THEN_ELSE = 290
+     VOID = 262,
+     FLOAT = 263,
+     CONST = 264,
+     RETURN = 265,
+     IF = 266,
+     ELSE = 267,
+     FOR = 268,
+     WHILE = 269,
+     DO = 270,
+     BREAK = 271,
+     CONTINUE = 272,
+     LP = 273,
+     RP = 274,
+     LB = 275,
+     RB = 276,
+     LC = 277,
+     RC = 278,
+     COMMA = 279,
+     SEMICOLON = 280,
+     QUESTION = 281,
+     COLON = 282,
+     NOT = 283,
+     ASSIGN = 284,
+     MINUS = 285,
+     ADD = 286,
+     MUL = 287,
+     DIV = 288,
+     MOD = 289,
+     AND = 290,
+     OR = 291,
+     UMINUS = 292,
+     SELF_ADD = 293,
+     SELF_MINUS = 294,
+     LOWER_THEN_ELSE = 295
    };
 #endif
 
@@ -82,17 +87,17 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 17 "sysy.y"
+#line 18 "sysy.y"
 
-	int    type_int;
-	float  type_float;
-	char   type_id[32];
-	struct node *ptr;
+  int    type_int;
+  float  type_float;
+  char   type_id[32];
+  struct node *ptr;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 96 "sysy.tab.h"
+#line 101 "sysy.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
